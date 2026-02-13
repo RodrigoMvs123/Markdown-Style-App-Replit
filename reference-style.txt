@@ -1,0 +1,499 @@
+# Markdown Style Guide for Raw Text to README Conversion
+
+## Overview
+
+This guide provides comprehensive markdown formatting patterns for converting raw text files into professionally formatted GitHub README.md files.
+
+---
+
+## Critical Rules
+
+### Line Preservation Rule
+- **PRESERVE EVERY SINGLE LINE** from the original raw text exactly as it appears
+- DO NOT reorganize, restructure, or rewrite content
+- ONLY add markdown formatting around the existing text
+- Keep all original spacing, indentation, and line breaks
+
+### Content Rules
+- **DO NOT** add author information, credits, or metadata at the beginning
+- **DO NOT** add "END OF PART X/Y" footers
+- **DO NOT** add "Created by: [Author Name]" signatures
+- **ONLY** include the raw content with markdown styling applied
+- Each part should start immediately with the content (first part starts with title/heading)
+
+---
+
+## Security: Handling Exposed Secrets
+
+### CRITICAL SECURITY RULE
+- **ALWAYS** scan for and redact exposed secrets, API keys, tokens, and credentials
+- Replace sensitive values with `...` (three dots)
+- This applies to ALL parts of the document
+
+### What to Redact
+
+**API Keys:**
+```markdown
+const API_KEY = "..."
+```
+
+**Access Tokens:**
+```markdown
+Authorization: Bearer ...
+```
+
+**Environment Variables with Secrets:**
+```markdown
+NEXT_PUBLIC_WIX_CLIENT_ID=...
+DATABASE_URL=...
+```
+
+**SSH Keys:**
+```markdown
+ssh-rsa ...
+```
+
+**Passwords:**
+```markdown
+password: "..."
+admin_pass = "..."
+```
+
+**Database Connection Strings:**
+```markdown
+mongodb://user:...@localhost:27017/app
+postgresql://user:...@localhost:5432/db
+```
+
+### Common Patterns to Detect
+- `sk-` (OpenAI API keys)
+- `pk_` or `sk_` (Stripe keys)
+- `AIza` (Google API keys)
+- `AKIA` (AWS access keys)
+- `ghp_` or `gho_` (GitHub tokens)
+- Long alphanumeric strings (32+ characters)
+- JWT tokens (three base64 segments separated by dots)
+- Database connection strings with credentials
+
+---
+
+## Markdown Formatting Patterns
+
+### 1. Headings
+
+```markdown
+# Main Title (for project title)
+## Section Heading (for major sections)
+### Subsection (for minor sections)
+```
+
+**When to use:**
+- `#` - Main project title (use once at the beginning)
+- `##` - Major sections like "Installation", "Usage", "Components", etc.
+- `###` - Subsections within major sections
+
+**Examples:**
+```markdown
+# Project-Title-Here
+
+## Installation
+
+### Prerequisites
+```
+
+---
+
+### 2. Code Blocks
+
+Use triple backticks with language specification:
+
+**JavaScript/TypeScript:**
+```markdown
+```javascript
+const example = "code here"
+```
+```
+
+```markdown
+```typescript
+interface Example {
+  name: string
+}
+```
+```
+
+**HTML:**
+```markdown
+```html
+<!DOCTYPE html>
+<html>
+</html>
+```
+```
+
+**CSS:**
+```markdown
+```css
+.class {
+  property: value;
+}
+```
+```
+
+**Bash/Terminal:**
+```markdown
+```bash
+npm install
+cd directory
+```
+```
+
+**JSON:**
+```markdown
+```json
+{
+  "key": "value"
+}
+```
+```
+
+**HCL (Terraform):**
+```markdown
+```hcl
+resource "aws_instance" "example" {
+  ami = "ami-123456"
+}
+```
+```
+
+**Environment Variables:**
+```markdown
+```env
+API_KEY=your-key-here
+```
+```
+
+---
+
+### 3. Links
+
+**Multiple Links (Use Bullet Lists):**
+```markdown
+- https://example.com
+- https://github.com/user/repo
+- https://another-link.com
+```
+
+**Inline Links:**
+```markdown
+[Link text](https://example.com)
+```
+
+**Reference in Text:**
+```markdown
+Check out the [documentation](https://docs.example.com) for more details.
+```
+
+---
+
+### 4. Lists
+
+**Unordered Lists:**
+```markdown
+- Item 1
+- Item 2
+  - Sub item
+```
+
+**Ordered Lists:**
+```markdown
+1. First step
+2. Second step
+3. Third step
+```
+
+**When to use:**
+- Services, tools, features
+- Installation steps
+- Configuration options
+- Prerequisites
+
+---
+
+### 5. Emphasis
+
+**Bold:**
+```markdown
+**Bold text**
+```
+
+**Italic:**
+```markdown
+*Italic text*
+```
+
+**Inline Code:**
+```markdown
+`inline code`
+```
+
+**When to use bold:**
+- File names: `**index.html**`, `**App.tsx**`
+- UI elements: `**Terminal**`, `**AWS Console**`
+- Important sections: `**Description**`, `**Resources**`
+
+---
+
+### 6. Separators
+
+```markdown
+---
+```
+
+Use horizontal rules (`---`) to separate major sections when needed.
+
+---
+
+### 7. File/Folder Structures
+
+```markdown
+**Explorer**
+```
+OPEN EDITORS
+NEXTJS-CLASSPASS
+├── Pages
+│   └── _app.js
+└── Components
+    └── Card.js
+```
+```
+
+---
+
+### 8. Terminal Commands
+
+```markdown
+**Terminal**
+```bash
+npm install
+cd project-directory
+terraform init
+```
+```
+
+---
+
+### 9. Visual References
+
+**Web Browser:**
+```markdown
+**Web Browser**
+```
+http://localhost:3000
+ClassPass
+Inspect
+```
+```
+
+**AWS UI / Cloud Console:**
+```markdown
+## AWS UI
+
+**Services**
+
+Compute
+
+EC2
+
+Resources
+```
+
+---
+
+## Pattern Recognition Examples
+
+### Example 1: Single Line with UI Element
+
+**Raw:**
+```
+Visual Studio Code
+```
+
+**Formatted:**
+```markdown
+**Visual Studio Code**
+```
+
+---
+
+### Example 2: Code Block
+
+**Raw:**
+```
+_app.js 
+import Link from 'next/link'
+import '../styles/globals.css'
+
+const App = () => {
+  return <div>Hello</div>
+}
+```
+
+**Formatted:**
+```markdown
+**_app.js**
+```javascript
+import Link from 'next/link'
+import '../styles/globals.css'
+
+const App = () => {
+  return <div>Hello</div>
+}
+```
+```
+
+---
+
+### Example 3: Terminal Instructions/Steps
+
+**Raw:**
+```
+Terminal 
+node -v
+npm create-next-app@latest
+Ok to proceed ? ( y )
+```
+
+**Formatted:**
+```markdown
+**Terminal**
+```bash
+node -v
+npm create-next-app@latest
+```
+
+```
+Ok to proceed ? ( y )
+```
+```
+
+---
+
+### Example 4: URLs
+
+**Raw:**
+```
+https://www.youtube.com/watch?v=wJE5tYkGvD8
+https://github.com/RodrigoMvs123/project/main/README.md
+```
+
+**Formatted:**
+```markdown
+- https://www.youtube.com/watch?v=wJE5tYkGvD8
+- https://github.com/RodrigoMvs123/project/main/README.md
+```
+
+---
+
+### Example 5: Multi-line Blocks
+
+**Raw:**
+```
+Wix UI
+Sign In ( New Account ) 
+What do you want to add to your website ?
+Bookings ( Let client to schedule appointments on your site ) - Next
+```
+
+**Formatted:**
+```markdown
+## Wix UI
+
+**Sign In ( New Account )**
+
+What do you want to add to your website ?
+
+**Bookings** ( Let client to schedule appointments on your site ) - Next
+```
+
+---
+
+## Special Cases
+
+### 1. Vertical Lists (Technologies, Tools)
+
+**Raw:**
+```
+AWS
+Kubernetes
+Jenkins
+```
+
+**Formatted:**
+```markdown
+- AWS
+- Kubernetes
+- Jenkins
+```
+
+---
+
+### 2. Configuration Blocks
+
+**Raw:**
+```
+.env
+NEXT_PUBLIC_WIX_CLIENT_ID=e698e30b-eb53-4825-8efd-edb0b5aec749
+```
+
+**Formatted:**
+```markdown
+**.env**
+```env
+NEXT_PUBLIC_WIX_CLIENT_ID=...
+```
+```
+
+---
+
+### 3. Browser Output
+
+**Raw:**
+```
+Web Browser 
+http://localhost:3000
+ClassPass
+Inspect
+```
+
+**Formatted:**
+```markdown
+**Web Browser**
+```
+http://localhost:3000
+ClassPass
+Inspect
+```
+```
+
+---
+
+### 4. Mixed Content (UI + Code)
+
+**Raw:**
+```
+AWS UI
+Services
+EC2
+resource "aws_instance" "example" {
+  ami = "ami-123"
+}
+```
+
+**Formatted:**
+```markdown
+## AWS UI
+
+**Services**
+
+EC2
